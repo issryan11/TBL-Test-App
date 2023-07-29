@@ -1,0 +1,36 @@
+node{
+def JenkinsHomDir='/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/TrustBankBuildTool/bin'
+  stage('1Clone'){
+git "https://github.com/Naleemp/trustBank-prod"
+  }
+  stage('2Test+build'){
+ sh "${JenkinsHomDir}/mvn clean package"
+  }
+ /*   stage('3codeQuality'){
+    sh "${JenkinsHomDir}/mvn clean package sonar:sonar"
+  }
+  
+  stage('4uploadArtifacts'){
+    sh "${JenkinsHomDir}/mvn deploy"
+  } 
+   stage('5deploy2UAT'){
+    sh "echo 'deploy to UAT'  "
+    deploy adapters: [tomcat9(credentialsId: 'tomcatCredential', path: '', url: 'http://3.94.170.254:8080/')], contextPath: null, war: 'target/*war'
+  }
+  stage('6approvalGate'){
+    sh "echo 'ready for review' "
+    timeout(time:5, unit:'DAYS') {
+    input message: 'Application ready for deployment, Please review and approve'
+      }
+  }
+ stage('7deploy2Prod'){
+     sleep 10
+     sh "echo 'Deploy to Production'"
+    deploy adapters: [tomcat9(credentialsId: 'tomcatCredential', path: '', url: 'http://52.90.222.104:8080/')], contextPath: null, war: 'target/*war'
+  }
+stage('8emailNotification'){
+emailext body: '''Hello Team;
+The application was not deployed because the client did not approve it. Please take a look the message and take the appropriate action.''', recipientProviders: [developers(), previous(), buildUser()], subject: 'Build Status', to: 'developers@gmail.com'
+}*/
+
+}
